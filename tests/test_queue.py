@@ -3,7 +3,8 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from rq.compat import timezone
 from mock.mock import patch
 
 from rq import Retry, Queue
