@@ -5,16 +5,10 @@ easily.
 
 RQ requires Redis >= 3.0.0.
 
-[![Build status](https://github.com/rq/rq/workflows/Test%20rq/badge.svg)](https://github.com/rq/rq/actions?query=workflow%3A%22Test+rq%22)
-[![PyPI](https://img.shields.io/pypi/pyversions/rq.svg)](https://pypi.python.org/pypi/rq)
-[![Coverage](https://codecov.io/gh/rq/rq/branch/master/graph/badge.svg)](https://codecov.io/gh/rq/rq)
+[![Build status](https://github.com/openoriented/rq27/workflows/Test%20rq/badge.svg)](https://github.com/openoriented/rq27/actions?query=workflow%3A%22Test+rq%22)
+
 
 Full documentation can be found [here][d].
-
-
-## Support RQ
-
-If you find RQ useful, please consider supporting this project via [Tidelift](https://tidelift.com/subscription/pkg/pypi-rq?utm_source=pypi-rq&utm_medium=referral&utm_campaign=readme).
 
 
 ## Getting started
@@ -100,11 +94,7 @@ That's about it.
 
 Simply use the following command to install the latest released version:
 
-    pip install rq
-
-If you want the cutting edge version (that may well be broken), use this:
-
-    pip install -e git+https://github.com/nvie/rq.git@master#egg=rq
+    pip install rq27
 
 
 ## Related Projects
