@@ -12,7 +12,8 @@ import sys
 import time
 import zlib
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from rq.compat import timezone
 from multiprocessing import Process
 from time import sleep
 

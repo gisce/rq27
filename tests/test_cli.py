@@ -2,7 +2,8 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from datetime import datetime, timezone
+from datetime import datetime
+from rq.compat import timezone
 
 from click.testing import CliRunner
 from redis import Redis

@@ -1,2 +1,4 @@
 redis>=3.5.0
 click>=5.0.0
+six
+pytz

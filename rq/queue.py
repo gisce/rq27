@@ -5,12 +5,12 @@ from __future__ import (absolute_import, division, print_function,
 import uuid
 import warnings
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from distutils.version import StrictVersion
 from redis import WatchError
 
-from .compat import as_text, string_types, total_ordering
+from .compat import as_text, string_types, total_ordering, timezone
 from .connections import resolve_connection
 from .defaults import DEFAULT_RESULT_TTL
 from .exceptions import DequeueTimeout, NoSuchJobError

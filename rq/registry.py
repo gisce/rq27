@@ -1,8 +1,8 @@
 import calendar
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
-from .compat import as_text
+from .compat import as_text, timezone
 from .connections import resolve_connection
 from .defaults import DEFAULT_FAILURE_TTL
 from .exceptions import InvalidJobOperation, NoSuchJobError
@@ -265,7 +265,7 @@ class ScheduledJobRegistry(BaseRegistry):
         # exception since Python < 3.2 has no builtin `timezone` class
         if not scheduled_datetime.tzinfo:
             try:
-                from datetime import timezone
+                from rq.compat import timezone
             except ImportError:
                 raise ValueError('datetime object with no timezone')
             tz = timezone(timedelta(seconds=-(time.timezone if time.daylight == 0 else time.altzone)))

@@ -15,12 +15,11 @@ import logging
 import numbers
 import sys
 
-from collections.abc import Iterable
 from distutils.version import StrictVersion
 
 from redis.exceptions import ResponseError
 
-from .compat import as_text, is_python_version, string_types
+from .compat import as_text, is_python_version, string_types, Iterable
 from .exceptions import TimeoutFormatError
 
 

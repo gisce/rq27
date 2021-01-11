@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
+from logging import Filter
 
 import sys
+from six import text_type, string_types, binary_type
+from six.moves import queue
 
 
 def is_python_version(*versions):
@@ -46,17 +49,13 @@ except ImportError:
 
 PY2 = sys.version_info[0] == 2
 
-# Python 3.x and up
-text_type = str
-string_types = (str,)
-
 
 def as_text(v):
     if v is None:
         return None
-    elif isinstance(v, bytes):
+    elif isinstance(v, binary_type):
         return v.decode('utf-8')
-    elif isinstance(v, str):
+    elif isinstance(v, text_type):
         return v
     else:
         raise ValueError('Unknown type %r' % type(v))
@@ -64,3 +63,24 @@ def as_text(v):
 
 def decode_redis_hash(h):
     return dict((as_text(k), h[k]) for k in h)
+
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
+
+
+try:
+    from datetime import timezone
+except ImportError:
+    import pytz as timezone
+
+
+class LoggingFilter(Filter):
+    def __init__(self, method, name='', ):
+        super(LoggingFilter, self).__init__(name)
+        self.callable = method
+
+    def filter(self, record):
+        return self.callable(record)

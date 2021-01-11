@@ -8,6 +8,7 @@ import sys
 from rq.utils import ColorizingStreamHandler
 from rq.defaults import (DEFAULT_LOGGING_FORMAT,
                          DEFAULT_LOGGING_DATE_FORMAT)
+from rq.compat import LoggingFilter
 
 
 def setup_loghandlers(level=None, date_format=DEFAULT_LOGGING_DATE_FORMAT,
@@ -18,10 +19,10 @@ def setup_loghandlers(level=None, date_format=DEFAULT_LOGGING_DATE_FORMAT,
         formatter = logging.Formatter(fmt=log_format, datefmt=date_format)
         handler = ColorizingStreamHandler(stream=sys.stdout)
         handler.setFormatter(formatter)
-        handler.addFilter(lambda record: record.levelno < logging.ERROR)
+        handler.addFilter(LoggingFilter(lambda record: record.levelno < logging.ERROR))
         error_handler = ColorizingStreamHandler(stream=sys.stderr)
         error_handler.setFormatter(formatter)
-        error_handler.addFilter(lambda record: record.levelno >= logging.ERROR)
+        error_handler.addFilter(LoggingFilter(lambda record: record.levelno >= logging.ERROR))
         logger.addHandler(handler)
         logger.addHandler(error_handler)
 
