@@ -1139,9 +1139,11 @@ class WorkerShutdownTestCase(TimeoutTestCase, RQTestCase):
         fooq = Queue('foo')
         w = Worker(fooq)
         sentinel_file = '/tmp/.rq_sentinel_cold'
+        if os.path.exists(sentinel_file):
+            os.remove(sentinel_file)
         fooq.enqueue(create_file_after_timeout, sentinel_file, 2)
         self.assertFalse(w._stop_requested)
-        p = Process(target=kill_worker, args=(os.getpid(), True))
+        p = Process(target=kill_worker, args=(os.getpid(), True, 0.1))
         p.start()
 
         self.assertRaises(SystemExit, w.work)
