@@ -268,7 +268,10 @@ class ScheduledJobRegistry(BaseRegistry):
                 from rq.compat import timezone
             except ImportError:
                 raise ValueError('datetime object with no timezone')
-            tz = timezone(timedelta(seconds=-(time.timezone if time.daylight == 0 else time.altzone)))
+
+            from rq.compat import TimezoneOffset
+
+            tz = TimezoneOffset(timedelta(seconds=-(time.timezone if time.daylight == 0 else time.altzone)), 'fixed')
             scheduled_datetime = scheduled_datetime.replace(tzinfo=tz)
 
         timestamp = calendar.timegm(scheduled_datetime.utctimetuple())

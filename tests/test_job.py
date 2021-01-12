@@ -32,9 +32,16 @@ class TestJob(RQTestCase):
             args=[12, "☃"],
             kwargs=dict(snowman="☃", null=None),
         )
-        self.assertEqual(
+        try:
+            # Python 2
+            test_string = u"myfunc(12, u'\\u2603', null=None, snowman=u'\\u2603')".decode('utf-8')
+        except AttributeError:
+            # Python 3
+            test_string = "myfunc(12, '☃', null=None, snowman='☃')"
+
+        self.assertEquals(
             job.description,
-            "myfunc(12, '☃', null=None, snowman='☃')",
+            test_string,
         )
 
     def test_create_empty_job(self):
@@ -419,6 +426,7 @@ class TestJob(RQTestCase):
         self.assertEqual(job.failure_ttl, None)
 
     def test_description_is_persisted(self):
+        from rq.compat import PY2
         """Ensure that job's custom description is set properly"""
         job = Job.create(func=fixtures.say_hello, args=('Lionel',),
                          description='Say hello!')
@@ -430,7 +438,11 @@ class TestJob(RQTestCase):
         job = Job.create(func=fixtures.say_hello, args=('Lionel',))
         job.save()
         Job.fetch(job.id, connection=self.testconn)
-        self.assertEqual(job.description, "tests.fixtures.say_hello('Lionel')")
+        if PY2:
+            description = "tests.fixtures.say_hello(u'Lionel')"
+        else:
+            description = "tests.fixtures.say_hello('Lionel')"
+        self.assertEqual(job.description, description)
 
     def test_prepare_for_execution(self):
         """job.prepare_for_execution works properly"""

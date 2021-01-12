@@ -26,7 +26,7 @@ from redis import WatchError
 
 from . import worker_registration
 from .command import parse_payload, PUBSUB_CHANNEL_TEMPLATE, handle_command
-from .compat import as_text, string_types, text_type, timezone
+from .compat import as_text, string_types, text_type, timezone, ChildProcessError
 from .connections import get_current_connection, push_connection, pop_connection
 
 from .defaults import (DEFAULT_RESULT_TTL,
