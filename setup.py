@@ -13,7 +13,7 @@ def get_version():
             locals = {}
             exec(f.read(), locals)
             return locals['VERSION']
-    except FileNotFoundError:
+    except IOError:
         raise RuntimeError('No version info found.')
 
 
@@ -22,14 +22,14 @@ def get_requirements():
     try:
         with open(os.path.join(basedir, 'requirements.txt')) as f:
             return f.readlines()
-    except FileNotFoundError:
+    except IOError:
         raise RuntimeError('No requirements info found.')
 
 
 setup(
-    name='rq',
+    name='rq27',
     version=get_version(),
-    url='https://github.com/nvie/rq/',
+    url='https://github.com/openoriented/rq27',
     license='BSD',
     author='Vincent Driessen',
     author_email='vincent@3rdcloud.com',
