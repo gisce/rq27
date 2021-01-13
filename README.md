@@ -1,3 +1,6 @@
+:warning: This is transition package of original library [RQ](https://github.com/rq/rq)
+working with Python2.7 while we're migrating our code to work with Python3 
+
 RQ (_Redis Queue_) is a simple Python library for queueing jobs and processing
 them in the background with workers.  It is backed by Redis and it is designed
 to have a low barrier to entry.  It should be integrated in your web stack
@@ -5,7 +8,7 @@ easily.
 
 RQ requires Redis >= 3.0.0.
 
-[![Build status](https://github.com/openoriented/rq27/workflows/Test%20rq/badge.svg)](https://github.com/openoriented/rq27/actions?query=workflow%3A%22Test+rq%22)
+[![Build status](https://github.com/gisce/rq27/workflows/Test%20rq/badge.svg)](https://github.com/openoriented/rq27/actions?query=workflow%3A%22Test+rq%22)
 
 
 Full documentation can be found [here][d].
@@ -101,6 +104,7 @@ Simply use the following command to install the latest released version:
 
 Check out these below repos which might be useful in your rq based project.
 
+- [rq](https://github.com/rq/rq)
 - [rq-dashboard](https://github.com/Parallels/rq-dashboard)
 - [rqmonitor](https://github.com/pranavgupta1234/rqmonitor)
 - [django-rq](https://github.com/rq/django-rq)
