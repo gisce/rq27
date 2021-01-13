@@ -187,7 +187,7 @@ def kill_worker(pid, double_kill, interval=0.5):
     os.kill(pid, signal.SIGTERM)
     if double_kill:
         # give the worker time to switch signal handler
-        time.sleep(interval)
+        time.sleep(0.1)
         os.kill(pid, signal.SIGTERM)
 
 

@@ -1143,7 +1143,7 @@ class WorkerShutdownTestCase(TimeoutTestCase, RQTestCase):
             os.remove(sentinel_file)
         fooq.enqueue(create_file_after_timeout, sentinel_file, 2)
         self.assertFalse(w._stop_requested)
-        p = Process(target=kill_worker, args=(os.getpid(), True, 0.1))
+        p = Process(target=kill_worker, args=(os.getpid(), True))
         p.start()
 
         self.assertRaises(SystemExit, w.work)
