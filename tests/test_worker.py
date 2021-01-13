@@ -12,7 +12,8 @@ import sys
 import time
 import zlib
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from rq.compat import timezone
 from multiprocessing import Process
 from time import sleep
 
@@ -1138,6 +1139,8 @@ class WorkerShutdownTestCase(TimeoutTestCase, RQTestCase):
         fooq = Queue('foo')
         w = Worker(fooq)
         sentinel_file = '/tmp/.rq_sentinel_cold'
+        if os.path.exists(sentinel_file):
+            os.remove(sentinel_file)
         fooq.enqueue(create_file_after_timeout, sentinel_file, 2)
         self.assertFalse(w._stop_requested)
         p = Process(target=kill_worker, args=(os.getpid(), True))

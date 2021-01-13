@@ -13,7 +13,7 @@ import time
 import traceback
 import warnings
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from distutils.version import StrictVersion
 from uuid import uuid4
 
@@ -26,7 +26,7 @@ from redis import WatchError
 
 from . import worker_registration
 from .command import parse_payload, PUBSUB_CHANNEL_TEMPLATE, handle_command
-from .compat import as_text, string_types, text_type
+from .compat import as_text, string_types, text_type, timezone, ChildProcessError
 from .connections import get_current_connection, push_connection, pop_connection
 
 from .defaults import (DEFAULT_RESULT_TTL,
@@ -1012,7 +1012,7 @@ class Worker(object):
 
     def handle_exception(self, job, *exc_info):
         """Walks the exception handler stack to delegate exception handling."""
-        exc_string = ''.join(traceback.format_exception(*exc_info))
+        exc_string = ''.join([as_text(x) for x in traceback.format_exception(*exc_info)])
         self.log.error(exc_string, exc_info=True, extra={
             'func': job.func_name,
             'arguments': job.args,

@@ -5,7 +5,7 @@ from __future__ import (absolute_import, division, print_function,
 import json
 import pickle
 import pickletools
-import queue
+from rq.compat import queue
 import unittest
 
 from rq.serializers import DefaultSerializer, resolve_serializer

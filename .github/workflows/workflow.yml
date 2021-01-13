@@ -2,9 +2,9 @@ name: Test rq
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8.3]
-        redis-version: [3, 4, 5, 6]
+        python-version: [2.7]
+        redis-version: [5]
         redis-py-version: [3.5.0]
 
     steps:

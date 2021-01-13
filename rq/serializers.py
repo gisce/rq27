@@ -6,9 +6,14 @@ from .compat import string_types
 from .utils import import_attribute
 
 
-class DefaultSerializer:
-    dumps = partial(pickle.dumps, protocol=pickle.HIGHEST_PROTOCOL)
-    loads = pickle.loads
+class DefaultSerializer():
+    @staticmethod
+    def dumps(obj):
+        return pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
+
+    @staticmethod
+    def loads(data):
+        return pickle.loads(data)
 
 
 class JSONSerializer():

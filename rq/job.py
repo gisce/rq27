@@ -8,12 +8,11 @@ import pickle
 import warnings
 import zlib
 
-from collections.abc import Iterable
 from distutils.version import StrictVersion
 from functools import partial
 from uuid import uuid4
 
-from rq.compat import as_text, decode_redis_hash, string_types
+from rq.compat import as_text, decode_redis_hash, string_types, Iterable, compat_repr
 from .connections import resolve_connection
 from .exceptions import NoSuchJobError
 from .local import LocalStack
@@ -44,6 +43,7 @@ UNEVALUATED = object()
 def truncate_long_string(data, maxlen=75):
     """ Truncates strings longer than maxlen
     """
+    data = as_text(data)
     return (data[:maxlen] + '...') if len(data) > maxlen else data
 
 
@@ -739,10 +739,8 @@ class Job(object):
         """
         if self.func_name is None:
             return None
-
-        arg_list = [as_text(truncate_long_string(repr(arg))) for arg in self.args]
-
-        kwargs = ['{0}={1}'.format(k, as_text(truncate_long_string(repr(v)))) for k, v in self.kwargs.items()]
+        arg_list = [as_text(truncate_long_string(compat_repr(arg))) for arg in self.args]
+        kwargs = ['{0}={1}'.format(k, as_text(truncate_long_string(compat_repr(v)))) for k, v in self.kwargs.items()]
         # Sort here because python 3.3 & 3.4 makes different call_string
         arg_list += sorted(kwargs)
         args = ', '.join(arg_list)
@@ -857,7 +855,6 @@ _job_stack = LocalStack()
 class Retry(object):
     def __init__(self, max, interval=0):
         """`interval` can be a positive number or a list of ints"""
-        super().__init__()
         if max < 1:
             raise ValueError('max: please enter a value greater than 0')
         

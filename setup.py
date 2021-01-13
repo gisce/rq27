@@ -13,7 +13,7 @@ def get_version():
             locals = {}
             exec(f.read(), locals)
             return locals['VERSION']
-    except FileNotFoundError:
+    except IOError:
         raise RuntimeError('No version info found.')
 
 
@@ -22,14 +22,14 @@ def get_requirements():
     try:
         with open(os.path.join(basedir, 'requirements.txt')) as f:
             return f.readlines()
-    except FileNotFoundError:
+    except IOError:
         raise RuntimeError('No requirements info found.')
 
 
 setup(
-    name='rq',
+    name='rq27',
     version=get_version(),
-    url='https://github.com/nvie/rq/',
+    url='https://github.com/openoriented/rq27',
     license='BSD',
     author='Vincent Driessen',
     author_email='vincent@3rdcloud.com',
@@ -41,7 +41,7 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=get_requirements(),
-    python_requires='>=3.5',
+    #python_requires='>=3.5',
     entry_points={
         'console_scripts': [
             'rq = rq.cli:main',
@@ -54,13 +54,7 @@ setup(
     },
     classifiers=[
         # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-        # 'Development Status :: 1 - Planning',
-        # 'Development Status :: 2 - Pre-Alpha',
-        # 'Development Status :: 3 - Alpha',
-        # 'Development Status :: 4 - Beta',
         'Development Status :: 5 - Production/Stable',
-        # 'Development Status :: 6 - Mature',
-        # 'Development Status :: 7 - Inactive',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Information Technology',
@@ -71,11 +65,7 @@ setup(
         'Operating System :: MacOS',
         'Operating System :: Unix',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 2.7',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Internet',
         'Topic :: Scientific/Engineering',
